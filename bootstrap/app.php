@@ -59,7 +59,8 @@ $app->singleton(
 |
 */
 
-$app->configure('app');
+// $app->configure('app');
+$app->configure('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,9 +77,9 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'auth' => App\Http\Middleware\Authenticate::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -92,9 +93,13 @@ $app->configure('app');
 */
 
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
+// $app->register(\Laravel\Passport\PassportServiceProvider::class);
+// $app->register(\Dusterio\LumenPassport\PassportServiceProvider::class);
 
+// Add this line
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -105,6 +110,7 @@ $app->configure('app');
 | can respond to, as well as the controllers that may handle them.
 |
 */
+// \Dusterio\LumenPassport\LumenPassport::routes($app->router, ['prefix' => 'api/v1/oauth'] );
 
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
